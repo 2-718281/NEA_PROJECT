@@ -1,13 +1,6 @@
 import numpy as np
-import pygame as pg
-import random
 import random as rd
-
-# constants will go to constants.py
-DEFAULT_ROOM_TYPE = 0
-DEFAULT_ROOM_WIDTH = 10
-DEFAULT_ROOM_HEIGHT = 10
-TRAP_TRUE_PROBABILITY = 0.3
+import constant as c
 
 
 class Room:
@@ -15,7 +8,8 @@ class Room:
     _next_room_ID = 0
     _room_dict = {}
 
-    def __init__(self, room_width=DEFAULT_ROOM_WIDTH, room_height=DEFAULT_ROOM_HEIGHT, room_type=DEFAULT_ROOM_TYPE):
+    def __init__(self, room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT,
+                 room_type=c.DEFAULT_ROOM_TYPE):
         self.room_type = room_type
         self.room_height = room_height
         self.room_width = room_width
@@ -23,6 +17,7 @@ class Room:
 
         self.room_config = self.d_room_config.copy()  # copy the default room 0 to new room template
         self.room_ID = Room._next_room_ID
+        self._platform_dict = {}
         # self.room_area = self.room_width * self.room_height  replaced by the calc_area function
         Room._next_room_ID += 1
 
@@ -40,10 +35,10 @@ class Room:
             room[0, :] = 1
             room[self.room_height - 1, :] = 1
 
-        elif room_type == 3:  # break 1st wall, setup a destination at 2nd last row
+        elif room_type == 3:  # setup a destination at 2nd last row
             room[0, :] = 1
-            room[self.room_width, :] = 1
             room[self.room_height - 1, :] = 1
+            room[:, self.room_width - 1] = 1
             room[self.room_height - 2, self.room_width - 2] = 5
         return room
 
@@ -55,14 +50,14 @@ class Room:
         Room._room_dict[self.room_ID] = self.room_config  # add new room to the room dictionary
 
     def calc_room_area(self):
-        return np.sum((self.room_config == 0).astype(np.int32))   # sum up all None-0 cells to work out area
+        return np.sum((self.room_config == 0).astype(np.int32))  # sum up all None-0 cells to work out area
 
     def platfrom_generation(self):  # put solid platform into the room
         print("generating platform")
-        candidate_platform_number = rd.randint(self.room_height // 2+4, self.room_height - 1)
+        candidate_platform_number = rd.randint(self.room_height // 2, self.room_height - 1)
         # random numbers of platform
 
-        for i in range(1, candidate_platform_number):
+        for i in range(0, candidate_platform_number):
             room_area = self.calc_room_area()
 
             if room_area > 0.6 * (self.room_width * self.room_height):
@@ -76,6 +71,7 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
+                        self._platform_dict[len(self._platform_dict)] = (length, center_pos_x, center_pos_y)
                         print('platform added')
                         break
             else:
@@ -86,8 +82,8 @@ class Room:
         for i in range(1, self.room_height - 1):
             for j in range(1, self.room_width - 1):
                 if self.room_config[i][j] == 1:
-                    chance = random.random()  # there is a 50% chance of generating 1 trap
-                    if chance < TRAP_TRUE_PROBABILITY:
+                    chance = rd.random()  # there is a 50% chance of generating 1 trap
+                    if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
 
     @staticmethod
@@ -102,8 +98,6 @@ class Room:
         # print(count_occupied)
         return count_occupied == 0
 
-
-r1 = Room(room_width=10, room_height=10, room_type=1)
-print(r1.room_config)
-r2 = Room(room_width=20, room_height=20, room_type=1)
-print(r2.room_config)
+    @staticmethod
+    def room_dict_getter():
+        return Room._room_dict
