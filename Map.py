@@ -10,5 +10,6 @@ for i in range(0, room_amount+1):
     new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=2)
 new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=3)
 
-room_dict = Room.room_dict_getter()  # get room dictionary
+room_lst = Room.room_dict_to_list()
+merged_map = np.hstack(list(room_lst))
 

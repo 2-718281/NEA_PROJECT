@@ -101,3 +101,9 @@ class Room:
     @staticmethod
     def room_dict_getter():
         return Room._room_dict
+
+    @staticmethod
+    def room_dict_to_list():
+        lst = Room._room_dict.values()
+        return lst
+
