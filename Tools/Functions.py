@@ -10,6 +10,3 @@ def find_centre(h, w):
     return centre_x, centre_y
 
 
-def merge_array(a:np.array,b:list):
-    if len(a)
-

@@ -1,6 +1,6 @@
 import numpy as np
 import random as rd
-import constant as c
+from Tools import constant as c
 
 
 class Room:
