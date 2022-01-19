@@ -1,6 +1,8 @@
+# Room class which creates room object
 import numpy as np
 import random as rd
-from Tools import constant as c
+from Tools import constant as c, def_path as pt
+import json
 
 
 class Room:
@@ -10,6 +12,7 @@ class Room:
 
     def __init__(self, room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT,
                  room_type=c.DEFAULT_ROOM_TYPE):
+
         self.room_type = room_type
         self.room_height = room_height
         self.room_width = room_width
@@ -95,7 +98,6 @@ class Room:
         roi_up = min(candidate_map.shape[0], center_pos[1] + radius + 1)
 
         count_occupied = np.sum((candidate_map[roi_down:roi_up, roi_left:roi_right] > 0).astype(np.int32))
-        # print(count_occupied)
         return count_occupied == 0
 
     @staticmethod
@@ -106,4 +108,10 @@ class Room:
     def room_dict_to_list():
         lst = Room._room_dict.values()
         return lst
+
+    @staticmethod
+    def pass_dict_to_json():
+        json.dumps(Room._room_dict)
+        
+
 
