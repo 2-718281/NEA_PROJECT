@@ -12,4 +12,6 @@ new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIG
 room_lst = Room.room_dict_to_list()
 merged_map = np.hstack(list(room_lst))
 
+print(merged_map)
+with open ('map.json',w+)
 # export the merged map to a txt file, if file exist, overwrite the old map.

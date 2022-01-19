@@ -91,7 +91,7 @@ class Room:
 
     @staticmethod
     def validation_check(candidate_map, center_pos, platform_length,
-                         radius=3):  # check if there is at least 1 valid route
+                         radius=1):  # check if there is at least 1 valid route
         roi_left = max(0, center_pos[0] - platform_length // 2 - radius)
         roi_right = min(candidate_map.shape[1], center_pos[0] + platform_length // 2 + radius + 1)
         roi_down = max(0, center_pos[1] - radius)
@@ -112,6 +112,6 @@ class Room:
     @staticmethod
     def pass_dict_to_json():
         json.dumps(Room._room_dict)
-        
+
 
 
