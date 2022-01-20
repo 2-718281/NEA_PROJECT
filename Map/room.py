@@ -2,7 +2,6 @@
 import numpy as np
 import random as rd
 from Tools import constant as c, def_path as pt
-import json
 
 
 class Room:
@@ -108,10 +107,5 @@ class Room:
     def room_dict_to_list():
         lst = Room._room_dict.values()
         return lst
-
-    @staticmethod
-    def pass_dict_to_json():
-        json.dumps(Room._room_dict)
-
 
 
