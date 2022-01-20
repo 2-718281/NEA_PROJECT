@@ -8,8 +8,11 @@ TITLE = "this is a title"
 DEFAULT_IMG = 0
 FONT_NAME = "arial"
 
+# main game constants
+BACKGROUND = ''
+
 # room constants
-WIDTH: int = 800
+WIDTH = 800
 HEIGHT = 600
 CAM_VEL = 0.5
 
@@ -17,6 +20,7 @@ CAM_VEL = 0.5
 P_ACC = 0.5
 P_FRI = -0.12
 P_GRA = 0.5
+P_HP = 10
 
 # room generation constants
 DEFAULT_ROOM_TYPE = 0

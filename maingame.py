@@ -6,8 +6,10 @@ import os
 from player import *
 from constants import *
 from platform import Platform
+
 g_F = os.path.dirname(__file__)
-i_F = os.path.join(g_F, "game/game/img")
+
+
 
 class Game:
     def __init__(self):
@@ -20,7 +22,8 @@ class Game:
 
         self.background = pg.image.load(os.path.join(i_F, "background.png"))
         self.background_rect = self.background.get_rect()
-        self.background = pg.transform.scale(self.background,(int(self.background_rect.width / 1.33),int(self.background_rect.height / 1.33)))
+        self.background = pg.transform.scale(self.background, (
+        int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))
         self.game_camera = pg.display.set_mode((WIDTH, HEIGHT)).get_rect()  # camera
         self.game_ground = pg.Surface((self.background_rect.width, self.background_rect.height))
         pg.display.set_caption(TITLE)  # 初始化标题
@@ -56,27 +59,26 @@ class Game:
         if self.player.vel.y > 0:  # check hit only when falling
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)  # 检查碰撞 check collision
             if hits:
-                self.player.pos.y = hits[0].rect.top + 1 # 停止移动
+                self.player.pos.y = hits[0].rect.top + 1  # 停止移动
                 self.player.vel.y = 0
-                   
+
         if self.player.rect.right >= WIDTH / 4 * 3:
             self.offset_x -= abs(self.player.vel.x)
             for plat in self.platforms:
                 plat.rect.x = PLATFORM_LIST[plat.index][0] + self.offset_x
-                #plat.rect.x -= abs(self.player.vel.x)
-                #if plat.rect.right <= 0:
+                # plat.rect.x -= abs(self.player.vel.x)
+                # if plat.rect.right <= 0:
                 #    plat.kill()   # kill platforms that are outside the camera
             self.player.pos.x -= abs(self.player.vel.x)  # move player pos leftward so the camera moves rightward
-                
+
         if self.player.rect.left <= WIDTH / 4:
             self.offset_x += abs(self.player.vel.x)
             for plat in self.platforms:
-                plat.rect.x = PLATFORM_LIST[plat.index][0] + self.offset_x  #abs(self.player.vel.x)
-                #if plat.rect.left >= WIDTH:
+                plat.rect.x = PLATFORM_LIST[plat.index][0] + self.offset_x  # abs(self.player.vel.x)
+                # if plat.rect.left >= WIDTH:
                 #    plat.kill()
             self.player.pos.x += abs(self.player.vel.x)
         self.all_sprites.update()  # 更新sprites
-             
 
     def events(self):
         for event in pg.event.get():  # 检查事件
@@ -90,14 +92,14 @@ class Game:
                     self.player.jump()
 
     def camera(self):
-        bound = self.game_camera.x + self.game_camera.width/3
+        bound = self.game_camera.x + self.game_camera.width / 3
         if self.player.vel.x > 0 and self.player.rect.centex > bound:
             self.game_camera.x += self.player.vel.x
 
-    def draw(self,surface):
-        self.game_ground.blit(self.background,self.game_camera,self.game_camera)
+    def draw(self, surface):
+        self.game_ground.blit(self.background, self.game_camera, self.game_camera)
         self.all_sprites.draw(self.game_ground)  # 渲染sprites
-        surface.blit(self.game_ground,(0,0),self.game_camera)
+        surface.blit(self.game_ground, (0, 0), self.game_camera)
         self.draw_text(str(self.score), 22, WHITE, WIDTH / 2, 15)
         self.draw_text("player x pos", 22, WHITE, WIDTH / 4, 0)
         self.draw_text(str(self.player.pos.x), 22, WHITE, WIDTH / 4, 22)
@@ -134,12 +136,7 @@ class Game:
                 if event.type == pg.KEYUP:
                     waiting = False
 
-    def draw_text(self, text, size, colour, x, y):
-        font = pg.font.Font(self.font_name, size)
-        text_surface = font.render(text, True, colour)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        self.screen.blit(text_surface, text_rect)
+
 
 
 # 游戏主循环
