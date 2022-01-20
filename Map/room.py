@@ -20,6 +20,7 @@ class Room:
         self.room_config = self.d_room_config.copy()  # copy the default room 0 to new room template
         self.room_ID = Room._next_room_ID
         self._platform_dict = {}
+        self._trap_dict = {}
         # self.room_area = self.room_width * self.room_height  replaced by the calc_area function
         Room._next_room_ID += 1
 
@@ -65,6 +66,7 @@ class Room:
             if room_area > 0.6 * (self.room_width * self.room_height):
 
                 for k in range(5):  # try max 5 times
+
                     length = rd.randint(3, self.room_width // 2)
                     start_pos_x = rd.randint(1, self.room_width - length - 2)
                     center_pos_x = start_pos_x + length // 2
@@ -73,7 +75,7 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        self._platform_dict[len(self._platform_dict)] = (length, center_pos_x, center_pos_y)
+                        self._platform_dict[len(self._platform_dict)] = (center_pos_x, center_pos_y, length, 1)
                         print('platform added')
                         break
             else:
@@ -87,6 +89,8 @@ class Room:
                     chance = rd.random()  # there is a 50% chance of generating 1 trap
                     if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
+                        self._trap_dict[len(self._trap_dict)] = (i, j)
+                        print('trap added')
 
     @staticmethod
     def validation_check(candidate_map, center_pos, platform_length,
@@ -120,5 +124,3 @@ class Room:
         merged_map = np.hstack(list(room_lst))
 
         return merged_map
-
-

@@ -3,6 +3,11 @@
 start = 'START'
 stand = 'STAND'
 jump = 'JUMP'
+dead = 'DEAD'
+attack = 'ATTACK'
+move = 'MOVE'
+stand = 'STAND'
+
 # gui states
 start_menu = 'START_MENU'
 main_game = 'MAIN_GAME'
