@@ -1,7 +1,7 @@
 # GUI file
 # render everything
 import pygame as pg
-from Tools import constant as c
+from content.Tools import constant as c
 
 
 class GUI:
@@ -11,7 +11,7 @@ class GUI:
         self.screen = pg.display.set_mode((w, h))  # window size
         self.font_name = pg.font.match_font(c.FONT_NAME)
 
-        # this is a layer that move with the camera
+        # layer that move with the camera
         self.background = pg.image.load(c.BACKGROUND)
         self.background_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background, (int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))

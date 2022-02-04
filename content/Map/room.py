@@ -1,13 +1,15 @@
 # Room class which creates room object
 import numpy as np
 import random as rd
-from Tools import constant as c, paths as pt
+from content.Tools import constant as c
 
 
 class Room:
     # tile 0 == empty, 1 == solid platform, 2 == trap platform, 3 == , 4 == spawning tile, 5 == destination tile
     _next_room_ID = 0
     _room_dict = {}
+    _plat_dict = {}
+    _trap_dict = {}
 
     def __init__(self, room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT,
                  room_type=c.DEFAULT_ROOM_TYPE):
@@ -19,7 +21,6 @@ class Room:
 
         self.room_config = self.d_room_config.copy()  # copy the default room 0 to new room template
         self.room_ID = Room._next_room_ID
-        self._platform_dict = {}
         self._trap_dict = {}
         # self.room_area = self.room_width * self.room_height  replaced by the calc_area function
         Room._next_room_ID += 1
@@ -75,7 +76,8 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        self._platform_dict[len(self._platform_dict)] = (center_pos_x, center_pos_y, length, 1)
+                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x, center_pos_y, length, 1)
+                        # export to platform list
                         print('platform added')
                         break
             else:
@@ -89,7 +91,7 @@ class Room:
                     chance = rd.random()  # there is a 50% chance of generating 1 trap
                     if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
-                        self._trap_dict[len(self._trap_dict)] = (i, j)
+                        Room._trap_dict[len(Room._trap_dict)] = (i, j)
                         print('trap added')
 
     @staticmethod
@@ -107,6 +109,14 @@ class Room:
     def room_dict_getter():
         return Room._room_dict
 
+    @ staticmethod
+    def plat_dict_getter():
+        return Room._plat_dict
+
+    @staticmethod
+    def trap_dict_getter():
+        return Room._trap_dict
+
     @staticmethod
     def room_dict_to_list():
         lst = Room._room_dict.values()
@@ -122,5 +132,4 @@ class Room:
 
         room_lst = Room.room_dict_to_list()
         merged_map = np.hstack(list(room_lst))
-
         return merged_map

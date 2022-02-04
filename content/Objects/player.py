@@ -1,4 +1,4 @@
-from Tools import constant as c, paths, states as s
+from content.Tools import constant as c, states as s
 import pygame as pg
 
 vec = pg.math.Vector2
@@ -9,9 +9,8 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
     def __init__(self, game):
         pg.sprite.Sprite.__init__(self)  # init sprite
         self.game = game
-        self.image = pg.Surface((50, 50)).fill(c.GREEN)
-
-        self.rect = self.image.get_rect()  # get rect
+        self.image = pg.Surface((50, 50)).fill(c.GREEN)  # player img
+        self.rect = self.image.get_rect()
         self.rect.center = (c.WIDTH / 2, c.HEIGHT / 2)
 
         self.pos = vec(c.WIDTH / 2, c.HEIGHT / 2)  # position vector
@@ -19,39 +18,6 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.acc = vec(0, 0)  # acceleration vector
         self.HP = c.P_HP
         self.state = s.start
-
-    def jump(self):
-        # jump when not in falling state
-        if self.state != s.fall or s.jump:
-            self.rect.x += 1
-            hits = pg.sprite.spritecollide(self, self.game.platforms, False)
-            self.rect.x -= 1
-            self.vel.y = -20
-
-    def fall(self):
-        # terminate state when collide
-        pass
-
-    def stand(self):
-        # stand
-        pass
-
-    def attack(self):
-        # attack
-        pass
-
-    def damaged(self):
-        # if damage, HP-1
-        pass
-
-    def move(self):
-        # vel change
-        pass
-
-    def dead(self):
-        # if dead, print game end menu
-        pass
-
 
     def update(self):
         self.acc = vec(0, c.P_GRA)  # acceleration，x = 0, y = 0.5
@@ -73,7 +39,41 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.vel += self.acc  # v = u + at
         self.pos += self.vel + 0.5 * self.acc  # s = ut + 1/2 vt^2
 
-        self.rect.midbottom = self.pos  # for the collision
+        self.rect.midbottom = self.pos  # for collision
+
+    def stand(self):
+        # stand
+        self.vel.x = 0
+        self.vel.y = 0
+        keys = pg.key.get_pressed()
+
+    def jump(self):
+        # jump when not in falling state
+        if self.state != s.fall or s.jump:
+            self.rect.x += 1
+            hits = pg.sprite.spritecollide(self, self.game.platforms, False)
+            self.rect.x -= 1
+            self.vel.y = -20
+
+    def fall(self):
+        # terminate state when collide
+        pass
+
+    def attack(self):
+        # attack
+        pass
+
+    def damaged(self):
+        # if damage, HP-1
+        pass
+
+    def move(self):
+        # vel change
+        pass
+
+    def dead(self):
+        # if dead, print game end menu
+        pass
 
     # state operations
     def state_change(self, new_state):
