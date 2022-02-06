@@ -24,7 +24,7 @@ class big_map:
             nodelist = [start_node+1,]
             next_prob = rd.random()
             if next_prob <= prob:
-                
+
 
 
 
