@@ -14,3 +14,6 @@ class Graph:
         self.adjmat[nodeA,nodeB] = 0
         self.adjmat[nodeB,nodeA] = 0
 
+    def return_graph(self):
+        return self.adjmat
+

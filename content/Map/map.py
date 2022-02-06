@@ -16,14 +16,24 @@ class big_map:
         self.nodes = MAP_HEIGHT * MAP_WIDTH
         self.map = F.Graph(self.nodes)
 
-    def gene_proc(self):
+    def Gene_proc(self):
         start_node = 0
         prob = 0.5
         terminate = False
+
         while not terminate:
-            nodelist = [start_node+1,]
-            next_prob = rd.random()
-            if next_prob <= prob:
+
+            node_left = max(0,start_node-1)
+            node_right = min(start_node+1, self.nodes)
+            node_up =  max(0,start_node + MAP_WIDTH)
+            node_down = min(start_node - MAP_WIDTH, self.nodes)
+            nodelist = [node_right, node_left, node_down, node_up]
+
+            new_node = start_node
+            while new_node == start_node:
+                new_node = rd.choice(nodelist)
+            self.map.add_link(start_node,new_node)
+            start_node = new_node
 
 
 

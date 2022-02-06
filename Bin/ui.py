@@ -40,7 +40,6 @@ for t in range(100000000):
 
         arr_render = arr.copy()
         arr_render[player_position[0] - 1:player_position[0] + 2, player_position[1] - 1:player_position[1] + 2] = 2
-        # for i in range(100):
         # str_out = "\r"#  sys.stdout.write('\n')
         # sys.stdout.write(str_out)
         # sys.stdout.flush()

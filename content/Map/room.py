@@ -47,7 +47,6 @@ class Room:
         return room
 
     def new_room(self, room_type):  # Generate a new room
-
         self.room_config = self.default_generation(room_type)
         self.platfrom_generation()
         self.trap_generation()
@@ -133,3 +132,4 @@ class Room:
         room_lst = Room.room_dict_to_list()
         merged_map = np.hstack(list(room_lst))
         return merged_map
+

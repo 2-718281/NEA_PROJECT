@@ -11,3 +11,4 @@ class Platform(pg.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.ID = ID
+
