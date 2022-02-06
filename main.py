@@ -16,8 +16,11 @@ class Game:
 
         self.screen = pg.display.set_mode((c.WIDTH, c.HEIGHT))  # screen
         # this is a layer that move with the camera
-
+        '''
         self.background = pg.image.load(os.path.join(i_F, "background.png"))
+        '''
+        self.background = pg.Surface((800,600))
+        self.background.fill(c.WHITE)
         self.background_rect = self.background.get_rect()
         self.background = pg.transform.scale(self.background, (int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))
 

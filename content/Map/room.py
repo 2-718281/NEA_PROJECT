@@ -81,7 +81,7 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        Room._plat_dict[len(Room._plat_dict)] = ( center_pos_y, center_pos_x, length, 1)
+                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x*c.ROOM_TO_GUI_SCALE, center_pos_y*c.ROOM_TO_GUI_SCALE, c.ROOM_TO_GUI_SCALE, length*10)
                         # export to platform list
                         print('platform added')
                         break
@@ -140,7 +140,7 @@ class Room:
         return merged_map
 
 
-r = Room(800,600,0)
+r = Room(c.WIDTH//c.ROOM_TO_GUI_SCALE,c.HEIGHT//c.ROOM_TO_GUI_SCALE,0)
 r.new_room(0)
 print(r.plat_dict_getter())
 print(r.room_config)
