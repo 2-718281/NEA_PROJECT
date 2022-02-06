@@ -7,6 +7,7 @@ dead = 'DEAD'
 attack = 'ATTACK'
 move = 'MOVE'
 stand = 'STAND'
+fall = 'FALL'
 
 # gui states
 start_menu = 'START_MENU'

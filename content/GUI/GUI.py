@@ -23,8 +23,6 @@ class GUI:
 
         self.state = 'START'
 
-    def start_menu(self):
-        pass
 
     def main_game(self):
         pass

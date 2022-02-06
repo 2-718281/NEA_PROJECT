@@ -1,7 +1,7 @@
 # Room class which creates room object
 import numpy as np
 import random as rd
-from content.Tools import constant as c
+from content.Tools import constant as c, Functions as f
 
 
 class Room:
@@ -34,6 +34,12 @@ class Room:
             room[self.room_height - 1, :] = 1
             room[:, 0] = 1
             room[self.room_height - 2, 1] = 4
+
+        elif room_type == 0:
+            room[0, :] = 1
+            room[self.room_height - 1, :] = 1
+            room[:, 0] = 1
+            room[:, self.room_width - 1] = 1
 
         elif room_type == 2:  # a tube like room
             room[0, :] = 1
@@ -75,7 +81,7 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x, center_pos_y, length, 1)
+                        Room._plat_dict[len(Room._plat_dict)] = ( center_pos_y, center_pos_x, length, 1)
                         # export to platform list
                         print('platform added')
                         break
@@ -110,7 +116,7 @@ class Room:
 
     @ staticmethod
     def plat_dict_getter():
-        return Room._plat_dict
+        return Room._plat_dict.values()
 
     @staticmethod
     def trap_dict_getter():
@@ -133,3 +139,8 @@ class Room:
         merged_map = np.hstack(list(room_lst))
         return merged_map
 
+
+r = Room(800,600,0)
+r.new_room(0)
+print(r.plat_dict_getter())
+print(r.room_config)

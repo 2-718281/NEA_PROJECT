@@ -1,10 +1,13 @@
 # random functions goes here
 
 class Graph:
-
     def __init__(self, node_num):
-        self.nodes = node_num
-        self.adjmat = [[0 for i in range(self.nodes)] for i in range(self.nodes)]
+        self.nodes_num = node_num
+        self.adjmat = [[0 for i in range(self.nodes_num)] for i in range(self.nodes_num)]  # adjacency matrix
+        self.node = []  # node content
+
+    def add_node(self,node):
+        self.node_con.append(node)
 
     def add_link(self, nodeA, nodeB):
         self.adjmat[nodeA,nodeB] = 1
