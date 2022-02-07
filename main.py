@@ -1,6 +1,7 @@
 import pygame as pg
 import pygame_menu
 import os
+import json
 from content.Tools import constant as c, states as s,db
 from content.Objects import player as obj_p
 from content.Objects import platform as obj_pl
@@ -30,6 +31,8 @@ class Game:
         pg.display.set_caption(c.TITLE)  # init title
         self.font_name = pg.font.match_font(c.FONT_NAME)
         self.user = db.db('USER',{'GUEST':''})
+        with open('USER') as json_file:
+            self.user_dict = json.load(json_file)
 
         self.name = 'GUEST'
         self.password = ''
@@ -37,14 +40,14 @@ class Game:
         self.running = True
         self.start_menu()
 
-    def print_name(self,name):
+    def update_db(self,name):
         self.user_dict[name] = ''
         self.user.replace_db(self.user_dict)
 
     def start_menu(self):
         menu = pygame_menu.Menu('Welcome', c.WIDTH, c.HEIGHT,
                                theme=pygame_menu.themes.THEME_BLUE)
-        menu.add.text_input('Name :', default='John Doe', onreturn=self.print_name)
+        menu.add.text_input('Name :', default='John Doe', onreturn=self.update_db)
         menu.add.text_input('Password:')
         menu.add.selector('Difficulty :', [('Hard', 1), ( 'Easy', 2)], onchange=self.set_difficulty)
         menu.add.button('Play', self.start_the_game)
