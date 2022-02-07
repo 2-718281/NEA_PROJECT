@@ -67,7 +67,7 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
 
 
     def dead(self):
-        if self.pos.y >= c.HEIGHT:
+        if self.pos.y >= c.BACKGROUND_HEIGHT:
             self.state = s.dead
             return True
         elif self.HP == 0:

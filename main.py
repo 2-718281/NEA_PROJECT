@@ -20,7 +20,7 @@ class Game:
         '''
         self.background = pg.image.load(os.path.join(i_F, "background.png"))
         '''
-        self.background = pg.Surface((c.WIDTH,c.HEIGHT))
+        self.background = pg.Surface((c.BACKGROUND_WIDTH,c.BACKGROUND_HEIGHT))
         self.background.fill(c.WHITE)
         self.background_rect = self.background.get_rect()
         '''self.background = pg.transform.scale(self.background, (int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))'''
@@ -47,7 +47,6 @@ class Game:
         menu.add.button('Play', self.start_the_game)
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(self.screen)
-
 
     def new(self):
         self.score = 0

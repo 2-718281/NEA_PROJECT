@@ -11,6 +11,8 @@ FONT_NAME = "arial"
 
 # main game constants
 BACKGROUND = ''
+BACKGROUND_HEIGHT = 1800
+BACKGROUND_WIDTH = 2400
 
 # room constants
 WIDTH = 800
