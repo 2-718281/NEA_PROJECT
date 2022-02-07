@@ -22,6 +22,7 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.pos = vec(c.WIDTH / 2, c.HEIGHT / 2)  # 初始化位置矢量 position vector
         self.vel = vec(0, 0)  # 初始化速度矢量 velocity vector
         self.acc = vec(0, 0)  # 初始化加速度矢量 acceleration vector
+        self.HP = 10
 
     def jump(self):
         self.rect.x += 1
@@ -49,4 +50,4 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
             return True
         elif self.HP == 0:
             return True
-        
+        return False

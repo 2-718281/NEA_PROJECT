@@ -60,8 +60,7 @@ class Game:
         self.run()
 
     def run(self):  # 运行游戏
-        self.playing = True
-        while self.playing:
+        while not self.player.dead():
             self.clock.tick(c.FPS)  # frame
             self.events()  # check events
             self.update()  # update data
