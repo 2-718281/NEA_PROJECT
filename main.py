@@ -43,7 +43,7 @@ class Game:
 
     def map_gen(self):
         r = room.Room()
-        r.generate_map()
+        self.a = r.generate_map()
         self.plat = r.plat_dict_getter()
         self.trap = r.trap_dict_getter()
         self.PLATFORM_LIST =list(self.plat.values())
@@ -86,6 +86,7 @@ class Game:
             t = obj_pl.Trap(*traps, i)
             self.all_sprites.add(t)
             self.traps.add(t)
+        self.render_mini_map(self.a)
         self.run()
 
     def run(self):  # 运行游戏
@@ -204,6 +205,24 @@ class Game:
         # pass
         self.new()
         # self.show_start_screen()
+    def render_mini_map(self, map):  # render map background
+
+        for i in range(map.shape[0]):
+            print_str = ''
+            for j in range(map.shape[1]):
+                if map[i, j] == 1:
+                    print_str += '#'
+                elif map[i, j] == 2:
+                    print_str += 'T'
+                elif map[i, j] == 3:
+                    print_str += ''
+                elif map[i, j] == 4:
+                    print_str += 'S'
+                elif map[i, j] == 5:
+                    print_str += 'E'
+                else:
+                    print_str += " "
+            print(print_str)
 
 game = Game()
 game.show_start_screen()  # 显示开始界面
