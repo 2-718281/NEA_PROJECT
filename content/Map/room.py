@@ -96,7 +96,7 @@ class Room:
                     chance = rd.random()  # there is a 50% chance of generating 1 trap
                     if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
-                        Room._trap_dict[len(Room._trap_dict)] = (i, j)
+                        Room._trap_dict[len(Room._trap_dict)] = (i*c.ROOM_TO_GUI_SCALE, j*c.ROOM_TO_GUI_SCALE)
                         print('trap added')
 
     @staticmethod
@@ -120,7 +120,7 @@ class Room:
 
     @staticmethod
     def trap_dict_getter():
-        return Room._trap_dict
+        return Room._trap_dict.values()
 
     @staticmethod
     def room_dict_to_list():
@@ -143,4 +143,5 @@ class Room:
 r = Room(c.WIDTH//c.ROOM_TO_GUI_SCALE,c.HEIGHT//c.ROOM_TO_GUI_SCALE,0)
 r.new_room(0)
 print(r.plat_dict_getter())
+print(r.trap_dict_getter())
 print(r.room_config)

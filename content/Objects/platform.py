@@ -14,7 +14,7 @@ class Platform(pg.sprite.Sprite):
 
 
 class Starting(pg.sprite.Sprite):
-    def __init__(self,x ,y ):
+    def __init__(self,x,y):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((c.ROOM_TO_GUI_SCALE,c.ROOM_TO_GUI_SCALE))
         self.image.fill(c.RED)
@@ -24,7 +24,7 @@ class Starting(pg.sprite.Sprite):
 
 
 class Trap(pg.sprite.Sprite):
-    def __init__(self,x ,y ):
+    def __init__(self,y,x,ID):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((c.ROOM_TO_GUI_SCALE,c.ROOM_TO_GUI_SCALE))
         self.image.fill(c.GREEN)

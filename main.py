@@ -5,6 +5,7 @@ from content.Tools import constant as c
 from content.Objects import player as obj_p
 from content.Objects import platform as obj_pl
 
+
 g_F = os.path.dirname(__file__)
 i_F = os.path.join(g_F, "res/img")
 
@@ -49,6 +50,7 @@ class Game:
         self.score = 0
         self.all_sprites = pg.sprite.Group()  # 加载所有sprites
         self.platforms = pg.sprite.Group()
+        self.traps = pg.sprite.Group()
         self.player = obj_p.Player(self)  # 添加玩家对象
         self.all_sprites.add(self.player)  # 添加玩家对象到sprites
         self.offset_x = 0
@@ -57,6 +59,11 @@ class Game:
             p = obj_pl.Platform(*plats, i)
             self.all_sprites.add(p)
             self.platforms.add(p)
+
+        for i, traps in enumerate(c.TRAP_LIST):
+            t = obj_pl.Trap(*traps, i)
+            self.all_sprites.add(t)
+            self.traps.add(t)
         self.run()
 
     def run(self):  # 运行游戏
