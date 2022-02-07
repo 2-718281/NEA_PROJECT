@@ -44,12 +44,12 @@ class Game:
     def map_gen(self):
         r = room.Room()
         r.generate_map()
-        plat = r.plat_dict_getter()
-        trap = r.trap_dict_getter()
+        self.plat = r.plat_dict_getter()
+        self.trap = r.trap_dict_getter()
         with open('PLATFORMS', 'w+') as outfile:
-            json.dump(plat, outfile)
+            json.dump(self.plat, outfile)
         with open('TRAPS','w+') as outfile:
-            json.dump(trap,outfile)
+            json.dump(self.trap,outfile)
 
     def update_db(self,name):
         self.user_dict[name] = ''
@@ -73,12 +73,13 @@ class Game:
         self.all_sprites.add(self.player)  # 添加玩家对象到sprites
         self.offset_x = 0
         self.playing = True
-        for i, plats in enumerate(c.PLATFORM_LIST):
+
+        for i, plats in enumerate(self.plat.values()):
             p = obj_pl.Platform(*plats, i)
             self.all_sprites.add(p)
             self.platforms.add(p)
 
-        for i, traps in enumerate(c.TRAP_LIST):
+        for i, traps in enumerate(self.trap.values()):
             t = obj_pl.Trap(*traps, i)
             self.all_sprites.add(t)
             self.traps.add(t)
