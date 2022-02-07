@@ -50,7 +50,7 @@ class Game:
         self.TRAP_LIST = list(self.trap.values())
         self.SPAWNING_POINT = c.SPAWNING_POINT
         self.END_POINT = c.END_POINT
-        
+
         print(self.plat)
         with open('PLATFORMS', 'w+') as outfile:
             json.dump(self.plat, outfile)
@@ -93,12 +93,12 @@ class Game:
             self.all_sprites.add(t)
             self.traps.add(t)
 
-        for i, start in enumerate(c.SPAWNING_POINT):
+        for i, start in enumerate(self.SPAWNING_POINT):
             s = obj_pl.Starting(*start, i)
             self.all_sprites.add(s)
             self.start.add(s)
 
-        for i, end in enumerate(c.END_POINT):
+        for i, end in enumerate(self.END_POINT):
             e = obj_pl.Ending(*end, i)
             self.all_sprites.add(e)
             self.end.add(e)
@@ -142,7 +142,12 @@ class Game:
                 #    plat.kill()   # kill platforms that are outside the camera
             for trap in self.traps:
                 trap.rect.x = self.TRAP_LIST[trap.index][0] + self.offset_x
+                
+            for s in self.start:
+                s.rect.x = self.SPAWNING_POINT[s.index][0] + self.offset_x
 
+            for e in self.end:
+                e.rect.x = self.END_POINT[e.index][0] + self.offset_x
             self.player.pos.x -= abs(self.player.vel.x)  # move player pos leftward so the camera moves rightward
 
         if self.player.rect.left <= c.WIDTH / 4:
