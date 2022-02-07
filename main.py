@@ -1,7 +1,7 @@
 import pygame as pg
 import pygame_menu
 import os
-from content.Tools import constant as c
+from content.Tools import constant as c, states as s
 from content.Objects import player as obj_p
 from content.Objects import platform as obj_pl
 
@@ -77,6 +77,12 @@ class Game:
         if self.player.vel.y > 0:  # check hit only when falling
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)  # 检查碰撞 check collision
             if hits:
+                self.player.pos.y = hits[0].rect.top + 1  # 停止移动
+                self.player.vel.y = 0
+            hits = pg.sprite.spritecollide(self.player, self.traps,False)
+            if hits:
+                self.player.HP -= 1
+                self.player.state = s.super
                 self.player.pos.y = hits[0].rect.top + 1  # 停止移动
                 self.player.vel.y = 0
 

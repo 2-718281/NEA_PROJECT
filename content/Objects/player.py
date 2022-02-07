@@ -1,8 +1,9 @@
 import pygame as pg
 import sys
 import random
-from content.Tools import constant as c
+from content.Tools import constant as c, states as s
 import os
+import time
 
 pg.init()
 vec = pg.math.Vector2
@@ -23,6 +24,7 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.vel = vec(0, 0)  # 初始化速度矢量 velocity vector
         self.acc = vec(0, 0)  # 初始化加速度矢量 acceleration vector
         self.HP = 10
+        self.state = s.stand
 
     def jump(self):
         self.rect.x += 1
@@ -30,8 +32,10 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.rect.x -= 1
         if hits:
             self.vel.y = -20   # gives upward speed
+        self.state = s.fall
 
     def update(self):
+        self.check_state()
         self.acc = vec(0, c.P_GRA)  # acceleration，x = 0, y = 0.5
         keys = pg.key.get_pressed()
         if keys[pg.K_a]:  # move left
@@ -45,9 +49,18 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
 
         self.rect.midbottom = self.pos  # for the collision
 
+    def check_state(self):
+        if self.state == s.super:
+            HP = self.HP
+            self.HP = 999999999999999
+            time.sleep(1)
+            self.HP = HP
+
     def dead(self):
         if self.pos.y >= c.HEIGHT:
+            self.state = s.dead
             return True
         elif self.HP == 0:
+            self.state = s.dead
             return True
         return False

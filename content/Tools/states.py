@@ -8,6 +8,7 @@ attack = 'ATTACK'
 move = 'MOVE'
 stand = 'STAND'
 fall = 'FALL'
+super = 'SUPER'
 
 # gui states
 start_menu = 'START_MENU'
