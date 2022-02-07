@@ -32,8 +32,13 @@ class Game:
 
         # game running condition
         self.running = True
-
         # menu
+        self.start_menu()
+
+    def print_name(self,name):
+        print(name)
+
+    def start_menu(self):
         menu = pygame_menu.Menu('Welcome', c.WIDTH, c.HEIGHT,
                                theme=pygame_menu.themes.THEME_BLUE)
         menu.add.text_input('Name :', default='John Doe', onreturn=self.print_name)
@@ -43,8 +48,6 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(self.screen)
 
-    def print_name(self,name):
-        print(name)
 
     def new(self):
         self.score = 0
@@ -54,7 +57,7 @@ class Game:
         self.player = obj_p.Player(self)  # 添加玩家对象
         self.all_sprites.add(self.player)  # 添加玩家对象到sprites
         self.offset_x = 0
-
+        self.playing = True
         for i, plats in enumerate(c.PLATFORM_LIST):
             p = obj_pl.Platform(*plats, i)
             self.all_sprites.add(p)
