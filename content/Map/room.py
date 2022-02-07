@@ -82,7 +82,7 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x*c.ROOM_TO_GUI_SCALE, center_pos_y*c.ROOM_TO_GUI_SCALE, c.ROOM_TO_GUI_SCALE, length*10)
+                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x*c.ROOM_TO_GUI_SCALE, center_pos_y*c.ROOM_TO_GUI_SCALE, c.ROOM_TO_GUI_SCALE, length*c.ROOM_TO_GUI_SCALE)
                         # export to platform list
                         print('platform added')
                         break

@@ -46,6 +46,9 @@ class Game:
         r.generate_map()
         self.plat = r.plat_dict_getter()
         self.trap = r.trap_dict_getter()
+        self.PLATFORM_LIST =list(self.plat.values())
+        self.TRAP_LIST = list(self.trap.values())
+        print(self.plat)
         with open('PLATFORMS', 'w+') as outfile:
             json.dump(self.plat, outfile)
         with open('TRAPS','w+') as outfile:
@@ -108,23 +111,23 @@ class Game:
         if self.player.rect.right >= c.WIDTH / 4 * 3:
             self.offset_x -= abs(self.player.vel.x)
             for plat in self.platforms:
-                plat.rect.x = c.PLATFORM_LIST[plat.index][0] + self.offset_x
+                plat.rect.x = self.PLATFORM_LIST[plat.index][0] + self.offset_x
                 # plat.rect.x -= abs(self.player.vel.x)
                 # if plat.rect.right <= 0:
                 #    plat.kill()   # kill platforms that are outside the camera
             for trap in self.traps:
-                trap.rect.x = c.TRAP_LIST[trap.index][0] + self.offset_x
+                trap.rect.x = self.TRAP_LIST[trap.index][0] + self.offset_x
 
             self.player.pos.x -= abs(self.player.vel.x)  # move player pos leftward so the camera moves rightward
 
         if self.player.rect.left <= c.WIDTH / 4:
             self.offset_x += abs(self.player.vel.x)
             for plat in self.platforms:
-                plat.rect.x = c.PLATFORM_LIST[plat.index][0] + self.offset_x  # abs(self.player.vel.x)
+                plat.rect.x = self.PLATFORM_LIST[plat.index][0] + self.offset_x  # abs(self.player.vel.x)
                 # if plat.rect.left >= c.WIDTH:
                 #    plat.kill()
             for trap in self.traps:
-                trap.rect.x = c.TRAP_LIST[trap.index][0] + self.offset_x
+                trap.rect.x = self.TRAP_LIST[trap.index][0] + self.offset_x
             self.player.pos.x += abs(self.player.vel.x)
         self.all_sprites.update()  # 更新sprites
 
