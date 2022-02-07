@@ -23,7 +23,7 @@ class Game:
         self.background = pg.Surface((c.WIDTH,c.HEIGHT))
         self.background.fill(c.WHITE)
         self.background_rect = self.background.get_rect()
-        self.background = pg.transform.scale(self.background, (int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))
+        '''self.background = pg.transform.scale(self.background, (int(self.background_rect.width / 1.33), int(self.background_rect.height / 1.33)))'''
 
         self.game_camera = pg.display.set_mode((c.WIDTH, c.HEIGHT)).get_rect()  # camera
         self.game_ground = pg.Surface((self.background_rect.width, self.background_rect.height))
@@ -74,7 +74,6 @@ class Game:
             self.draw(self.screen)  # render the game
 
     def update(self):
-
         if self.player.vel.y > 0:  # check hit only when falling
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)  # 检查碰撞 check collision
             if hits:
@@ -88,6 +87,9 @@ class Game:
                 # plat.rect.x -= abs(self.player.vel.x)
                 # if plat.rect.right <= 0:
                 #    plat.kill()   # kill platforms that are outside the camera
+            for trap in self.traps:
+                trap.rect.x = c.TRAP_LIST[trap.index][0] + self.offset_x
+
             self.player.pos.x -= abs(self.player.vel.x)  # move player pos leftward so the camera moves rightward
 
         if self.player.rect.left <= c.WIDTH / 4:
@@ -96,6 +98,8 @@ class Game:
                 plat.rect.x = c.PLATFORM_LIST[plat.index][0] + self.offset_x  # abs(self.player.vel.x)
                 # if plat.rect.left >= c.WIDTH:
                 #    plat.kill()
+            for trap in self.traps:
+                trap.rect.x = c.TRAP_LIST[trap.index][0] + self.offset_x
             self.player.pos.x += abs(self.player.vel.x)
         self.all_sprites.update()  # 更新sprites
 

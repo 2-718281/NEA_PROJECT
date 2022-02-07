@@ -96,7 +96,7 @@ class Room:
                     chance = rd.random()  # there is a 50% chance of generating 1 trap
                     if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
-                        Room._trap_dict[len(Room._trap_dict)] = (i*c.ROOM_TO_GUI_SCALE, j*c.ROOM_TO_GUI_SCALE)
+                        Room._trap_dict[len(Room._trap_dict)] = (j*c.ROOM_TO_GUI_SCALE,i*c.ROOM_TO_GUI_SCALE)
                         print('trap added')
 
     @staticmethod
