@@ -5,6 +5,7 @@ import json
 from content.Tools import constant as c, states as s,db
 from content.Objects import player as obj_p
 from content.Objects import platform as obj_pl
+from content.Map import room
 
 
 g_F = os.path.dirname(__file__)
@@ -40,6 +41,16 @@ class Game:
         self.running = True
         self.start_menu()
 
+    def map_gen(self):
+        r = room.Room()
+        r.generate_map()
+        plat = r.plat_dict_getter()
+        trap = r.trap_dict_getter()
+        with open('PLATFORMS', 'w+') as outfile:
+            json.dump(plat, outfile)
+        with open('TRAPS','w+') as outfile:
+            json.dump(trap,outfile)
+
     def update_db(self,name):
         self.user_dict[name] = ''
         self.user.replace_db(self.user_dict)
@@ -48,17 +59,12 @@ class Game:
         menu = pygame_menu.Menu('Welcome', c.WIDTH, c.HEIGHT,
                                theme=pygame_menu.themes.THEME_BLUE)
         menu.add.text_input('Name :', default='John Doe', onreturn=self.update_db)
-        menu.add.text_input('Password:')
-        menu.add.selector('Difficulty :', [('Hard', 1), ( 'Easy', 2)], onchange=self.set_difficulty)
         menu.add.button('Play', self.start_the_game)
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(self.screen)
 
-
-    def check_enter(self,name,p):
-        pass
-
     def new(self):
+        self.map_gen()
         self.score = 0
         self.all_sprites = pg.sprite.Group()  # 加载所有sprites
         self.platforms = pg.sprite.Group()

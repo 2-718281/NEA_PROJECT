@@ -1,6 +1,7 @@
 # Room class which creates room object
 import numpy as np
 import random as rd
+import json
 from content.Tools import constant as c, Functions as f
 
 
@@ -116,11 +117,11 @@ class Room:
 
     @ staticmethod
     def plat_dict_getter():
-        return Room._plat_dict.values()
+        return Room._plat_dict
 
     @staticmethod
     def trap_dict_getter():
-        return Room._trap_dict.values()
+        return Room._trap_dict
 
     @staticmethod
     def room_dict_to_list():
@@ -138,10 +139,3 @@ class Room:
         room_lst = Room.room_dict_to_list()
         merged_map = np.hstack(list(room_lst))
         return merged_map
-
-
-r = Room(c.WIDTH//c.ROOM_TO_GUI_SCALE,c.HEIGHT//c.ROOM_TO_GUI_SCALE,0)
-r.new_room(0)
-print(r.plat_dict_getter())
-print(r.trap_dict_getter())
-print(r.room_config)
