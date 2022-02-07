@@ -3,11 +3,7 @@ from content.Tools import constant as c
 
 
 class Platform(pg.sprite.Sprite):
-<<<<<<< HEAD
-    def __init__(self, x, y, h, w, index):
-=======
     def __init__(self, x, y, h, w, index):  # 平台类，坐标，长宽
->>>>>>> 44368dfafdb51cf6a9ee9ec1b69c3210913cf53b
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((w, h))  # 长宽
         self.image.fill(c.BLUE)
