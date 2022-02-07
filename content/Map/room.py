@@ -136,7 +136,7 @@ class Room:
         for i in range(0, 3):
             new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=2,rm_x=count*c.WIDTH)
             count += 1
-        new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=3,rm_x=5*c.WIDTH)
+        new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=3, rm_x=4*c.WIDTH)
 
         room_lst = Room.room_dict_to_list()
         merged_map = np.hstack(list(room_lst))
