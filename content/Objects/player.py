@@ -44,3 +44,9 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
 
         self.rect.midbottom = self.pos  # for the collision
 
+    def dead(self):
+        if self.pos.y >= c.HEIGHT:
+            return True
+        elif self.HP == 0:
+            return True
+        
