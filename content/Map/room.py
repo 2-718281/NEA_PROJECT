@@ -13,7 +13,7 @@ class Room:
     _trap_dict = {}
 
     def __init__(self, room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT,
-                 room_type=c.DEFAULT_ROOM_TYPE):
+                 room_type=c.DEFAULT_ROOM_TYPE, rm_x = 0):
 
         self.room_type = room_type
         self.room_height = room_height
@@ -23,6 +23,7 @@ class Room:
         self.room_config = self.d_room_config.copy()  # copy the default room 0 to new room template
         self.room_ID = Room._next_room_ID
         self._trap_dict = {}
+        self.room_x = rm_x
         # self.room_area = self.room_width * self.room_height  replaced by the calc_area function
         Room._next_room_ID += 1
 
@@ -55,14 +56,14 @@ class Room:
 
     def new_room(self, room_type):  # Generate a new room
         self.room_config = self.default_generation(room_type)
-        self.platfrom_generation()
-        self.trap_generation()
+        self.platfrom_generation(self.room_x)
+        self.trap_generation(self.room_x)
         Room._room_dict[self.room_ID] = self.room_config  # add new room to the room dictionary
 
     def calc_room_area(self):
         return np.sum((self.room_config == 0).astype(np.int32))  # sum up all None-0 cells to work out area
 
-    def platfrom_generation(self):  # put solid platform into the room
+    def platfrom_generation(self,rm_x):  # put solid platform into the room
         print("generating platform")
         candidate_platform_number = rd.randint(self.room_height // 2, self.room_height - 1)
         # random numbers of platform
@@ -82,14 +83,14 @@ class Room:
 
                     if result:
                         self.room_config[center_pos_y, start_pos_x:start_pos_x + length] = 1
-                        Room._plat_dict[len(Room._plat_dict)] = (center_pos_x*c.ROOM_TO_GUI_SCALE, center_pos_y*c.ROOM_TO_GUI_SCALE, c.ROOM_TO_GUI_SCALE, length*c.ROOM_TO_GUI_SCALE)
+                        Room._plat_dict[len(Room._plat_dict)] = ((center_pos_x)*c.ROOM_TO_GUI_SCALE + rm_x, center_pos_y*c.ROOM_TO_GUI_SCALE, c.ROOM_TO_GUI_SCALE, length*c.ROOM_TO_GUI_SCALE)
                         # export to platform list
                         print('platform added')
                         break
             else:
                 break
 
-    def trap_generation(self):  # generate trap upon platform
+    def trap_generation(self,rm_x):  # generate trap upon platform
         print("generate traps")
         for i in range(1, self.room_height - 1):
             for j in range(1, self.room_width - 1):
@@ -97,7 +98,7 @@ class Room:
                     chance = rd.random()  # there is a 50% chance of generating 1 trap
                     if chance < c.TRAP_TRUE_PROBABILITY:
                         self.room_config[i][j] = 2
-                        Room._trap_dict[len(Room._trap_dict)] = (j*c.ROOM_TO_GUI_SCALE,i*c.ROOM_TO_GUI_SCALE)
+                        Room._trap_dict[len(Room._trap_dict)] = (j*c.ROOM_TO_GUI_SCALE,(i)*c.ROOM_TO_GUI_SCALE+rm_x)
                         print('trap added')
 
     @staticmethod
@@ -130,12 +131,16 @@ class Room:
 
     @staticmethod
     def generate_map():
-        room_amount = rd.randint(c.MIN_ROOM, c.MAX_ROOM)
         new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=1)
-        for i in range(0, room_amount + 1):
-            new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=2)
-        new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=3)
+        count = 1
+        for i in range(0, 3):
+            new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=2,rm_x=count*c.WIDTH)
+            count += 1
+        new_room = Room(room_width=c.DEFAULT_ROOM_WIDTH, room_height=c.DEFAULT_ROOM_HEIGHT, room_type=3,rm_x=5*c.WIDTH)
 
         room_lst = Room.room_dict_to_list()
         merged_map = np.hstack(list(room_lst))
         return merged_map
+
+r = Room()
+print(r.generate_map())
