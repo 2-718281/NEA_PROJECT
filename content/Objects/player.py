@@ -66,6 +66,7 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
             self.image.fill(c.GREEN)
 
 
+
     def dead(self):
         if self.pos.y >= c.BACKGROUND_HEIGHT:
             self.state = s.dead
