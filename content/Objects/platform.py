@@ -14,13 +14,24 @@ class Platform(pg.sprite.Sprite):
 
 
 class Starting(pg.sprite.Sprite):
-    def __init__(self,x,y):
+    def __init__(self,x,y,index):
         pg.sprite.Sprite.__init__(self)
         self.image = pg.Surface((c.ROOM_TO_GUI_SCALE,c.ROOM_TO_GUI_SCALE))
         self.image.fill(c.RED)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.index = index
+
+class Ending(pg.sprite.Sprite):
+    def __init__(self,x,y,index):
+        pg.sprite.Sprite.__init__(self)
+        self.image = pg.Surface((c.ROOM_TO_GUI_SCALE,c.ROOM_TO_GUI_SCALE))
+        self.image.fill(c.BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.index = index
 
 
 class Trap(pg.sprite.Sprite):

@@ -9,6 +9,7 @@ move = 'MOVE'
 stand = 'STAND'
 fall = 'FALL'
 super = 'SUPER'
+passed = 'PASS'
 
 # gui states
 start_menu = 'START_MENU'

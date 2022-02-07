@@ -2,7 +2,7 @@ import pygame as pg
 import pygame_menu
 import os
 import json
-from content.Tools import constant as c, states as s,db
+from content.Tools import constant as c, states as st , db as db
 from content.Objects import player as obj_p
 from content.Objects import platform as obj_pl
 from content.Map import room
@@ -48,6 +48,9 @@ class Game:
         self.trap = r.trap_dict_getter()
         self.PLATFORM_LIST =list(self.plat.values())
         self.TRAP_LIST = list(self.trap.values())
+        self.SPAWNING_POINT = c.SPAWNING_POINT
+        self.END_POINT = c.END_POINT
+        
         print(self.plat)
         with open('PLATFORMS', 'w+') as outfile:
             json.dump(self.plat, outfile)
@@ -72,6 +75,9 @@ class Game:
         self.all_sprites = pg.sprite.Group()  # 加载所有sprites
         self.platforms = pg.sprite.Group()
         self.traps = pg.sprite.Group()
+        self.start = pg.sprite.Group()
+        self.end = pg.sprite.Group()
+
         self.player = obj_p.Player(self)  # 添加玩家对象
         self.all_sprites.add(self.player)  # 添加玩家对象到sprites
         self.offset_x = 0
@@ -86,6 +92,17 @@ class Game:
             t = obj_pl.Trap(*traps, i)
             self.all_sprites.add(t)
             self.traps.add(t)
+
+        for i, start in enumerate(c.SPAWNING_POINT):
+            s = obj_pl.Starting(*start, i)
+            self.all_sprites.add(s)
+            self.start.add(s)
+
+        for i, end in enumerate(c.END_POINT):
+            e = obj_pl.Ending(*end, i)
+            self.all_sprites.add(e)
+            self.end.add(e)
+
         self.render_mini_map(self.a)
         self.run()
 
@@ -105,9 +122,16 @@ class Game:
             hits = pg.sprite.spritecollide(self.player, self.traps,False)
             if hits:
                 self.player.HP -= 1
-                self.player.state = s.super
+                self.player.state = st.super
                 self.player.pos.y = hits[0].rect.top + 1  # 停止移动
                 self.player.vel.y = 0
+            hits = pg.sprite.spritecollide(self.player, self.start, False)
+            if hits:
+                self.player.pos.y = hits[0].rect.top + 1  # 停止移动
+                self.player.vel.y = 0
+            hits = pg.sprite.spritecollide(self.player, self.end, False)
+            if hits:
+                self.player.state = st.passed
 
         if self.player.rect.right >= c.WIDTH / 4 * 3:
             self.offset_x -= abs(self.player.vel.x)
@@ -125,10 +149,15 @@ class Game:
             self.offset_x += abs(self.player.vel.x)
             for plat in self.platforms:
                 plat.rect.x = self.PLATFORM_LIST[plat.index][0] + self.offset_x  # abs(self.player.vel.x)
-                # if plat.rect.left >= c.WIDTH:
-                #    plat.kill()
             for trap in self.traps:
                 trap.rect.x = self.TRAP_LIST[trap.index][0] + self.offset_x
+
+            for s in self.start:
+                s.rect.x = self.SPAWNING_POINT[s.index][0] + self.offset_x
+
+            for e in self.end:
+                e.rect.x = self.END_POINT[e.index][0] + self.offset_x
+
             self.player.pos.x += abs(self.player.vel.x)
         self.all_sprites.update()  # 更新sprites
 

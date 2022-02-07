@@ -37,12 +37,6 @@ class Room:
             room[:, 0] = 1
             room[self.room_height - 2, 1] = 4
 
-        elif room_type == 0:
-            room[0, :] = 1
-            room[self.room_height - 1, :] = 1
-            room[:, 0] = 1
-            room[:, self.room_width - 1] = 1
-
         elif room_type == 2:  # a tube like room
             room[0, :] = 1
             room[self.room_height - 1, :] = 1
@@ -89,7 +83,6 @@ class Room:
                         break
             else:
                 break
-
     def trap_generation(self,rm_x):  # generate trap upon platform
         print("generate traps")
         for i in range(1, self.room_height - 1):

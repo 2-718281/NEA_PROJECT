@@ -19,8 +19,8 @@ class Player(pg.sprite.Sprite):  # inherit from sprite
         self.image = pg.Surface((c.ROOM_TO_GUI_SCALE,c.ROOM_TO_GUI_SCALE))
         self.image.fill(c.GREEN)
         self.rect = self.image.get_rect()  # 获取正方形 get rect
-        self.rect.center = (c.WIDTH/2, c.HEIGHT/2)
-        self.pos = vec(c.WIDTH / 2, c.HEIGHT / 2)  # 初始化位置矢量 position vector
+        self.rect.center = (0, c.HEIGHT//2+c.ROOM_TO_GUI_SCALE)
+        self.pos = vec(0, c.HEIGHT//2+c.ROOM_TO_GUI_SCALE)  # 初始化位置矢量 position vector
         self.vel = vec(0, 0)  # 初始化速度矢量 velocity vector
         self.acc = vec(0, 0)  # 初始化加速度矢量 acceleration vector
         self.HP = 5000
