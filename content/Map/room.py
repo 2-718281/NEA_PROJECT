@@ -137,3 +137,4 @@ class Room:
 
 r = Room()
 print(r.generate_map())
+

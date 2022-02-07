@@ -2,7 +2,7 @@
 # UI gets items from save json file.
 import keyboard
 import time
-from Map import room
+from content.Map import room
 
 
 class UI:

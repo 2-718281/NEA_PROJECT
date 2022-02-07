@@ -69,12 +69,6 @@ class Game:
         menu.add.button('Quit', pygame_menu.events.EXIT)
         menu.mainloop(self.screen)
 
-    def end_menu(self):
-        end_menu = pygame_menu.Menu('GAME END', c.WIDTH, c.HEIGHT,
-                                theme=pygame_menu.themes.THEME_BLUE)
-        end_menu.mainloop(self.screen)
-
-
     def new(self):
         self.map_gen()
         self.score = 0
@@ -113,12 +107,11 @@ class Game:
         self.run()
 
     def run(self):  # 运行游戏
-        while no self.player.dead st.dead and self.player.state != st.passed:
+        while not self.player.dead():
             self.clock.tick(c.FPS)  # frame
             self.events()  # check events
             self.update()  # update data
             self.draw(self.screen)  # render the game
-        self.end_menu()
 
     def update(self):
         if self.player.vel.y > 0:  # check hit only when falling
@@ -207,6 +200,15 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
+    def show_go_screen(self):
+        # show go screen when game end/ player die
+        if not self.running:
+            return
+        self.screen.fill(c.BLACK)
+        self.draw_text("game over", 50, c.WHITE, c.WIDTH / 2, c.HEIGHT / 4)
+        self.draw_text('your score is' + str(self.score), 22, c.WHITE, c.WIDTH / 2, c.HEIGHT * 3 / 4 - 40)
+        self.draw_text("press any key to restart", 22, c.WHITE, c.WIDTH / 2, c.HEIGHT * 3 / 4)
+        pg.display.flip()
 
     def wait_for_key(self):
         # wait for player to response
@@ -228,9 +230,15 @@ class Game:
         self.screen.blit(text_surface, text_rect)
 
 
-    def start_the_game(self):
-        self.new()
+    def set_difficulty(self, value, difficulty):
+        # Do the job here !
+        pass
 
+    def start_the_game(self):
+        # Do the job here !
+        # pass
+        self.new()
+        # self.show_start_screen()
     def render_mini_map(self, map):  # render map background
 
         for i in range(map.shape[0]):
@@ -254,5 +262,6 @@ game = Game()
 game.show_start_screen()  # 显示开始界面
 while game.running:  # 运行游戏
     game.new()  # 创建新游戏
+    game.show_go_screen()  # 结算游戏
 
 pg.quit()
