@@ -30,7 +30,6 @@ class Game:
         pg.display.set_caption(c.TITLE)  # init title
         self.font_name = pg.font.match_font(c.FONT_NAME)
         self.user = db.db('USER',{'GUEST':''})
-        self.user_dict = self.user.data
 
         self.name = 'GUEST'
         self.password = ''

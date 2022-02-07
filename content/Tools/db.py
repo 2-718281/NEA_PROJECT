@@ -1,8 +1,9 @@
+import json
 class db:
     def __init__(self, name, data):
-        self.data = data
-        self.db_name = name
-        open(name, mode='w+')
+        self.db_name = name+'.json'
+        with open(name, 'w+') as outfile:
+            json.dump(data, outfile)
 
     def update_db(self, update, updated):
         self.data[update] = updated
